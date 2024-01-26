@@ -52,7 +52,7 @@ export const signin = async (req, res, next) => {
 
     )
 
-    const { password: pass, ...rest } = validUser._doc
+    const { password: pass, ...rest } = validUser._doc  //remove the hashed password from the response
 
     res.status(200).cookie('access_token', token, {
       httpOnly: true

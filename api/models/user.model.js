@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profilePicture: {
+    type: String,
+    default: 'https://media.istockphoto.com/id/526947869/vector/man-silhouette-profile-picture.jpg?s=612x612&w=0&k=20&c=5I7Vgx_U6UPJe9U2sA2_8JFF4grkP7bNmDnsLXTYlSc='
+  }
 
 }, { timestamp: true })
 

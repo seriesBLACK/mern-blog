@@ -32,7 +32,7 @@ export default function Signin() {
         dispatch(signInFailure(data.message))
       }
       if (res.ok) {
-        dispatch(signInSuccess())
+        dispatch(signInSuccess(data))
         navigate('/')
       }
 

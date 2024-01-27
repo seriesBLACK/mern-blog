@@ -10,8 +10,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     const urlparams = new URLSearchParams(location.search)
-    const tapFromUrl = urlparams.get('tap')
-    if (tapFromUrl) setatab(tapFromUrl);
+    const tapFromUrl = urlparams.get('tab')
+    if (tapFromUrl) {
+      setatab(tapFromUrl)
+
+    };
   }, [location.search])
   return (
     <div className='min-h-screen flex flex-col md:flex-row'>
@@ -21,14 +24,7 @@ export default function Dashboard() {
       </div>
       {/* profile... */}
       {tab === 'profile' && <DashProfile />}
-      {/* posts... */}
-      {tab === 'posts' && <DashPosts />}
-      {/* users */}
-      {tab === 'users' && <DashUsers />}
-      {/* comments  */}
-      {tab === 'comments' && <DashComments />}
-      {/* dashboard comp */}
-      {tab === 'dash' && <DashboardComp />}
+
     </div>
   )
 }

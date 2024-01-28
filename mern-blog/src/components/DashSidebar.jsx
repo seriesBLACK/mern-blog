@@ -101,6 +101,7 @@ export default function DashSidebar() {
           <Sidebar.Item
             icon={HiArrowSmRight}
             className='cursor-pointer'
+            as='div'
 
           >
             Sign Out

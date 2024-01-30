@@ -4,11 +4,14 @@ import { useEffect, useRef, useState } from "react"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { app } from "../firebase"
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { useNavigate } from 'react-router-dom'
 import 'react-circular-progressbar/dist/styles.css';
 import { updateFailure, updateStart, updateSuccess } from "../redux/user/userSlice"
 
+
 export default function DashProfile() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { currentUser } = useSelector(state => state.user)
   const [image, setImage] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
@@ -26,7 +29,6 @@ export default function DashProfile() {
   }
 
   const uploadImage = async () => {
-
     const storage = getStorage(app)
     const fileName = new Date().getTime() + 'profile image'
     const storageRef = ref(storage, fileName)
@@ -51,6 +53,7 @@ export default function DashProfile() {
     )
   }
 
+
   useEffect(() => {
     if (image) {
       setImageError(null)
@@ -72,14 +75,12 @@ export default function DashProfile() {
     if (Object.keys(formData).length === 0) return
 
     try {
-      console.log('start')
       dispatch(updateStart())
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      console.log('end')
 
       const data = await res.json()
 
@@ -94,6 +95,38 @@ export default function DashProfile() {
     }
 
   }
+
+
+  async function deleteAccount() {
+    try {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await res.json()
+      if (data.success === false) console.log('faile')
+      console.log(data);
+      navigate('/sign-in')
+
+    } catch (error) {
+
+    }
+
+  };
+
+
+  async function signOut() {
+    try {
+      await fetch('/api/auth/signout')
+      navigate('/sign-in')
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -121,8 +154,8 @@ export default function DashProfile() {
         <Button type="submit" gradientDuoTone='purpleToBlue'> Update</Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className="curser-pointer">Delete account</span>
-        <span className="curser-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={deleteAccount}>Delete account</span>
+        <span className="cursor-pointer" onClick={signOut}>Sign Out</span>
       </div>
     </div>
   )

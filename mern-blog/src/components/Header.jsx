@@ -2,15 +2,28 @@ import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react"
 import { Link, useLocation } from "react-router-dom"
 import { AiOutlineSearch } from "react-icons/ai"
 import { FaMoon, FaSun } from "react-icons/fa"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { toggleTheme } from "../redux/theme/themeSlice"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Header() {
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const path = useLocation().pathname
   const { currentUser } = useSelector(state => state.user)
   const { theme } = useSelector(state => state.theme)
+
+
+  async function signOut() {
+    try {
+      await fetch('/api/auth/signout')
+      navigate('/sign-in')
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <Navbar className="border-b-2" as="div">
       <Link to="/" className="self-cente whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white">
@@ -54,7 +67,7 @@ export default function Header() {
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Dropdown.Item >Sign out</Dropdown.Item>
+              <Dropdown.Item onClick={signOut}>Sign out</Dropdown.Item>
             </Dropdown>
           ) : (
             <Link to='/sign-in'>

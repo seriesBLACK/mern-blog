@@ -166,7 +166,7 @@ export default function DashProfile() {
         <Button type="submit" gradientDuoTone='purpleToBlue' disabled={loading || imageUploading}> {loading ? "Loading..." : "Update"}</Button>
         {
           currentUser.isAdmin && (
-            <Link to={'create-post'}>
+            <Link to={'/create-post'}>
               <Button type="button" className="w-full" gradientDuoTone="purpleToPink">
                 Create Post
               </Button>

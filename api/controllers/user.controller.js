@@ -57,7 +57,8 @@ export const updateUser = async (req, res, next) => {
 
 
 export const deleteUser = async (req, res, next) => {
-  console.log(req.user.id !== req.params.userId && !req.user.isAdmin)
+
+
   if (req.user.id !== req.params.userId && !req.user.isAdmin) return next(errorHandler(401, "you can not delete this account"))
 
   try {

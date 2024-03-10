@@ -33,7 +33,7 @@ export default function Signup() {
         setLoading(false)
         return setError(data.message)
       }
-      if (res.ok) navigate('/')
+      if (res.ok) navigate('/sign-in')
 
     } catch (error) {
       setError(error.message)

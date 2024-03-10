@@ -13,29 +13,30 @@ export default function DashPosts() {
   const [postIdToDelete, setPostIdToDelete] = useState('');
 
 
-  async function getPosts() {
-    try {
 
-      const res = await fetch(`/api/post/read?userId=${currentUser._id}`)
-      const data = await res.json()
-
-
-      if (res.ok) {
-
-        setUserPost(data.posts)
-        if (data.posts.length < 9) {
-          setShowMore(false)
-        }
-      }
-
-
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
+    async function getPosts() {
+      try {
+
+        const res = await fetch(`/api/post/read?userId=${currentUser._id}`)
+        const data = await res.json()
+
+
+        if (res.ok) {
+
+          setUserPost(data.posts)
+          if (data.posts.length < 9) {
+            setShowMore(false)
+          }
+        }
+
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
     getPosts()
   }
     , [currentUser._id])

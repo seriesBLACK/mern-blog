@@ -116,7 +116,6 @@ export default function DashProfile() {
 
       const data = await res.json()
       if (data.success === false) console.log('faile')
-      console.log(data);
       navigate('/sign-in')
 
     } catch (error) {

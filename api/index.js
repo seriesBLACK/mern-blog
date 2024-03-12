@@ -5,8 +5,10 @@ import userRoutes from "./routes/user.route.js"
 import authRoutes from "./routes/auth.route.js"
 import postRoutes from "./routes/post.route.js"
 import cookieParser from "cookie-parser"
+import path from 'path';
 
 dotenv.config()
+const __dirname = path.resolve();
 
 
 mongoose.connect(process.env.MONGODB)
@@ -18,6 +20,12 @@ app.use(cookieParser())
 app.listen(3000, () => {
   console.log("Server is runing on port 3000")
 })
+
+app.use(express.static(path.join(__dirname, '/mern-blog/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'mern-blog', 'dist', 'index.html'));
+});
 
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
